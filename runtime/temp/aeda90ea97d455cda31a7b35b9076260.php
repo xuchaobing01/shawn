@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:61:"C:\wamp\www\shawn\public/../application/admin\view\login.html";i:1488861387;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -77,7 +78,7 @@
             var username = $('#username').val();
             var password = $('#password').val();
             var code = $("#code").val();
-            $.post("{:url('login/doLogin')}", {
+            $.post("<?php echo url('login/doLogin'); ?>", {
                 'username': username,
                 'password': password,
                 'code': code

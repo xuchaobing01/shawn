@@ -13,6 +13,7 @@ class Login extends Controller
 
     //登录操作
     public function doLogin(){
+        sleep(10);
         return json(['code'=>-1,'data'=>url('index/idnex'),'msg'=>'密码错误']);
     }
 
