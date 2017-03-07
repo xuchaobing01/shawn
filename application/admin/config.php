@@ -6,5 +6,6 @@ return [
         '__JS__'  => '/static/admin/js',
         '__IMG__' => '/static/admin/images',
     ),
+    'app_trace'=>true,
 
 ];
