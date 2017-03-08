@@ -5,6 +5,6 @@ class Index extends Base
 {
     public function index()
     {
-        return 'hello';
+        return $this->fetch('/index');
     }
 }
