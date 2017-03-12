@@ -75,9 +75,7 @@
                     lock = false;
                     $("#login_btn").removeClass('btn-danger').addClass('btn-success').val('登 录');
                     if (1 != data.code) {
-                        if(-2==data.code){
-                            $("#code").next('img').click();
-                        }
+                        $("#code").next('img').click();
                         $("#err_msg").show().html("<span style='color:red'>" + data.msg + "</span>");
                         return;
                     } else {

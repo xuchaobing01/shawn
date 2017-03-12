@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:56:"D:\WWW\shawn\public/../application/admin\view\login.html";i:1488985819;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:56:"D:\WWW\shawn\public/../application/admin\view\login.html";i:1489288198;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,9 +76,7 @@
                     lock = false;
                     $("#login_btn").removeClass('btn-danger').addClass('btn-success').val('登 录');
                     if (1 != data.code) {
-                        if(-2==data.code){
-                            $("#code").next('img').click();
-                        }
+                        $("#code").next('img').click();
                         $("#err_msg").show().html("<span style='color:red'>" + data.msg + "</span>");
                         return;
                     } else {
