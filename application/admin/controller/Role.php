@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Admin;
 
-class User extends Base
+class Role extends Base
 {
     protected $admin;
 

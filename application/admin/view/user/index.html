@@ -13,19 +13,32 @@
     <link href="/static/admin/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
     <style type="text/css">
-        @media screen and  (min-width:768px){
-            .btn-group{display: none;}
-            .btn-group1{display: block;}
+        @media screen and  (min-width: 768px) {
+            .btn-group {
+                display: none;
+            }
+
+            .btn-group1 {
+                display: block;
+            }
         }
-        @media screen and (max-width:768px){
-            .btn-group{display: block;}
-            .btn-group1{display: none;}
+
+        @media screen and (max-width: 768px) {
+            .btn-group {
+                display: block;
+            }
+
+            .btn-group1 {
+                display: none;
+            }
         }
-        .ibox-content .form-group{
-            width:auto;
+
+        .ibox-content .form-group {
+            width: auto;
         }
-        .ibox-content .form-group .btn{
-            margin-top:5px;
+
+        .ibox-content .form-group .btn {
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -46,7 +59,9 @@
         </div>
         <div class="ibox-content">
             <div class="form-group clearfix col-sm-1">
-                <a href="./userAdd"><button class="btn btn-primary" type="button"><i class="fa fa-plus"></i>&nbsp;添加用户</button></a>
+                <a href="./adduser">
+                    <button class="btn btn-primary" type="button"><i class="fa fa-plus"></i>&nbsp;添加管理员</button>
+                </a>
             </div>
             <!--搜索框开始-->
             <form id='commentForm' role="form" method="post" class="form-inline">
@@ -54,8 +69,10 @@
                     <div class="form-group">
                         <label>管理员名称：</label>
                         <input type="text" class="form-control" id="username" name="username">
-                    </div>&nbsp;&nbsp;
-                    <button class="btn btn-primary" type="button" style="margin-top:5px" id="search"><strong>搜 索</strong>
+                    </div>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-primary" type="button" style="margin-top:5px" id="search"><strong>搜
+                        索</strong>
                     </button>
                 </div>
             </form>
@@ -107,25 +124,25 @@
             striped: true,  //表格显示条纹
             pagination: true, //启动分页
             pageSize: 10,  //每页显示的记录数
-            pageNumber:1, //当前第几页
+            pageNumber: 1, //当前第几页
             pageList: [5, 10, 15, 20, 25],  //记录数可选列表
             sidePagination: "server", //表示服务端请求
             //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
             //设置为limit可以获取limit, offset, search, sort, order
-            queryParamsType : "undefined",
+            queryParamsType: "undefined",
             queryParams: function queryParams(params) {   //设置查询参数
                 var param = {
                     pageNumber: params.pageNumber,
                     pageSize: params.pageSize,
-                    searchText:$('#username').val(),
+                    searchText: $('#username').val(),
 
-            };
+                };
                 return param;
             },
-            onLoadSuccess: function(){  //加载成功时执行
-                layer.msg("加载成功", {time : 1000});
+            onLoadSuccess: function () {  //加载成功时执行
+                layer.msg("加载成功", {time: 1000});
             },
-            onLoadError: function(){  //加载失败时执行
+            onLoadError: function () {  //加载失败时执行
                 layer.msg("加载数据失败");
             }
         });
@@ -139,14 +156,14 @@
         $("#search").bind("click", initTable);
     });
 
-    function userDel(id){
-        layer.confirm('确认删除此管理员?', {icon: 3, title:'提示'}, function(index){
+    function deluser(id) {
+        layer.confirm('确认删除此管理员?', {icon: 3, title: '提示'}, function (index) {
             //do something
-            $.getJSON('./userDel', {'id' : id}, function(res){
-                if(res.code == 1){
+            $.getJSON('./delUser', {'id': id}, function (res) {
+                if (res.code == 1) {
                     layer.alert(res.msg);
                     initTable();
-                }else{
+                } else {
                     layer.alert(res.msg);
                 }
             });

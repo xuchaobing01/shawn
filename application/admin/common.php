@@ -1,10 +1,11 @@
 <?php
 
-function showOperate($operate=[]){
-    if(empty($operate)){
+function showOperate($operate = [])
+{
+    if (empty($operate)) {
         return '';
     }
-    $option=<<<EOT
+    $option = <<<EOT
 <div class="btn-group" >
     <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
         操作 <span class="caret"></span>
@@ -12,23 +13,38 @@ function showOperate($operate=[]){
     <ul class="dropdown-menu">
 EOT;
 
-    foreach($operate as $k=>$v){
-        $option.="<li><a href='".$v."'>".$k."</a></li>";
+    foreach ($operate as $k => $v) {
+        $option .= "<li><a href='" . $v . "'>" . $k . "</a></li>";
     }
-    $option.="</ul></div>";
+    $option .= "</ul></div>";
 
     $option .= '<div class="btn-group1">';
-    $operate_style=config('operate_style');
-    foreach($operate as $k=>$v){
-        $option.='<a href="'.$v.'" ><button class="'.$operate_style[$k]['color'].'" type="button" style="border-radius: 3px;margin-right: 5px;" ><i class="'.$operate_style[$k]['style'].'" ></i> '.$k.'</button></a>';
+    $operate_style = config('operate_style');
+    foreach ($operate as $k => $v) {
+        $option .= '<a href="' . $v . '" ><button class="' . $operate_style[$k]['color'] . '" type="button" style="border-radius: 3px;margin-right: 5px;" ><i class="' . $operate_style[$k]['style'] . '" ></i> ' . $k . '</button></a>';
     }
-    $option.="</div>";
+    $option .= "</div>";
     return $option;
 }
 
-function formatTime($time){
-    if(empty($time)){
+function formatTime($time)
+{
+    if (empty($time)) {
         return '';
     }
-    return date("Y-m-d H:i:s",$time);
+    return date("Y-m-d H:i:s", $time);
+}
+/**
+ * 将字符解析成数组
+ * @param $str
+ */
+function parseParams($str)
+{
+
+    $arrParams = [];
+
+    parse_str(html_entity_decode(urldecode($str)), $arrParams);
+
+    return $arrParams;
+
 }
