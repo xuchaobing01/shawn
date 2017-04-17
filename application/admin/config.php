@@ -14,6 +14,7 @@ return [
     'operate_style'=>array(
         '编辑'=>['color'=>'btn btn-primary btn-sm','style'=>'fa fa-pencil'],
         '删除'=>['color'=>'btn btn-danger btn-sm','style'=>'fa fa-trash-o'],
+        '分配权限'=>['color'=>'btn btn-success btn-sm','style'=>'fa fa-key'],
     ),
     'status_style'=>array(
         '1'=>'success',

@@ -1,15 +1,15 @@
 <?php
 namespace app\admin\controller;
 
-use app\admin\model\Admin;
+use app\admin\model\RoleModel;
 
 class Role extends Base
 {
-    protected $admin;
+    protected $roleModel;
 
     public function _initialize()
     {
-        $this->admin = new Admin();
+        $this->roleModel = new RoleModel();
     }
 
     public function index()
@@ -23,24 +23,14 @@ class Role extends Base
             $offest = ($params['pageNumber'] - 1) * $limit;
 
             $where = [];
-            $resultData = $this->admin->getUsersByWhere($where, $offest, $limit);
-
-            $status = config('user_status');
-            $status_style = config('status_style');
+            $resultData = $this->roleModel->getRolesByWhere($where, $offest, $limit);
 
             foreach ($resultData as $k => $v) {
 
-                if ('0' !== $v['last_login_time']) {
-                    $resultData[$k]['last_login_time'] = formatTime($v['last_login_time']);
-                }
-
-                if (isset($v['status'])) {
-                    $resultData[$k]['status'] = '<span class="label label-' . $status_style[$v['status']] . '">' . $status[$v['status']] . '</span>';
-                }
-
                 $operate = [
-                    '编辑' => url('user/editUser', ['id' => $v['id']]),
-                    '删除' => "javascript:deluser('" . $v['id'] . "')"
+                    '编辑' => url('role/editRole', ['id' => $v['id']]),
+                    '删除' => "javascript:delRole('" . $v['id'] . "')",
+                    '分配权限' => "javascript:delRole('" . $v['id'] . "')"
                 ];
 
                 $resultData[$k]['operate'] = showOperate($operate);
@@ -50,7 +40,7 @@ class Role extends Base
                 }
 
             }
-            $returnData['total'] = $this->admin->getAllUsersCount($where);
+            $returnData['total'] = $this->roleModel->getAllRolesCount($where);
             $returnData['rows'] = $resultData;
 
             return json($returnData);
@@ -58,7 +48,7 @@ class Role extends Base
         return $this->fetch('index');
     }
 
-    public function addUser()
+    public function addRole()
     {
 
         if (request()->isPost()) {
@@ -67,24 +57,15 @@ class Role extends Base
 
             $param = parseParams($param['data']);
 
-            $param['password'] = md5($param['password']);
-
-            $flag = $this->admin->insertUser($param);
+            $flag = $this->roleModel->insertRole($param);
 
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
 
         }
-
-        //$rolelist=User::all();
-
-        //管理员状态 启用停用
-        $user_status = config('user_status');
-
-        $this->assign('user_status', $user_status);
-        return $this->fetch('useradd');
+        return $this->fetch('addrole');
     }
 
-    public function editUser()
+    public function editRole()
     {
         if (request()->isPost()) {
 
@@ -92,7 +73,7 @@ class Role extends Base
 
             $param = parseParams($param['data']);
 
-            $hasuser = $this->admin->where('username', 'eq', $param['username'])
+            $hasuser = $this->roleModel->where('rolename', 'eq', $param['rolename'])
                 ->where('id', 'neq', $param['id'])
                 ->find();
 
@@ -102,17 +83,7 @@ class Role extends Base
 
             }
 
-            if (empty($param['password'])) {
-
-                unset($param['password']);
-
-            } else {
-
-                $param['password'] = md5($param['password']);
-
-            }
-
-            $flag = $this->admin->editUser($param);
+            $flag = $this->roleModel->editRole($param);
 
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
 
@@ -120,23 +91,19 @@ class Role extends Base
 
         $id = input("param.id");
 
-        $user = Admin::get($id);
+        $role = RoleModel::get($id);
 
-        //管理员状态 启用停用
-        $user_status = config('user_status');
-
-        $this->assign('user_status', $user_status);
-        $this->assign('user', $user);
-        return $this->fetch('useredit');
+        $this->assign('role', $role);
+        return $this->fetch('editrole');
 
     }
 
-    public function delUser()
+    public function delRole()
     {
 
         $id = input("param.id");
 
-        $flag = $this->admin->delUser($id);
+        $flag = $this->roleModel->delRole($id);
 
         return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
 
